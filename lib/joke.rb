@@ -6,7 +6,7 @@ class Joke
     def fetch
       response = JSON.parse(fetch_joke)
       unless response['status'] == 200
-        return 'Congratulations! You have failed successfuly'
+        return 'Congratulations! You have failed successfully'
       end
 
       response['joke']
