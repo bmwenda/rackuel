@@ -18,9 +18,9 @@ class Application
       [200, HEADERS, [Utils::Renderer.new('index.html.erb').render]]
     when '/joke'
       joke = Joke.fetch
-      [200, HEADERS, ["<html><body><b><em>#{joke}</em></b></body></html>"]]
+      [200, HEADERS, [Utils::Renderer.new('joke.html.erb', { joke: joke }).render]]
     else
-      [404, HEADERS, ['<html><body><h4>404 Not Found</h4></body></html>']]
+      [404, HEADERS, [Utils::Renderer.new('not_found.html.erb').render]]
     end
   end
 end
