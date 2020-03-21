@@ -1,4 +1,5 @@
 require_relative 'lib/joke'
+require_relative 'utils/renderer'
 
 class Application
   HEADERS = {
@@ -14,7 +15,7 @@ class Application
   def route_path(env)
     case env['REQUEST_PATH']
     when '/'
-      [200, HEADERS, ['<html><body><h2>Hello World</h2></body></html>']]
+      [200, HEADERS, [Utils::Renderer.new('index.html.erb').render]]
     when '/joke'
       joke = Joke.fetch
       [200, HEADERS, ["<html><body><b><em>#{joke}</em></b></body></html>"]]
