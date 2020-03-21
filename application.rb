@@ -1,9 +1,8 @@
-require 'json'
-
 require_relative 'lib/joke'
+
 class Application
   HEADERS = {
-    'Content-Type' => 'application/json'
+    'Content-Type' => 'text/html'
   }.freeze
 
   def call(env)
@@ -15,12 +14,12 @@ class Application
   def route_path(env)
     case env['REQUEST_PATH']
     when '/'
-      [200, HEADERS, ['Hello World'.to_json]]
+      [200, HEADERS, ['<html><body><h2>Hello World</h2></body></html>']]
     when '/joke'
       joke = Joke.fetch
-      [200, HEADERS, [joke.to_json]]
+      [200, HEADERS, ["<html><body><b><em>#{joke}</em></b></body></html>"]]
     else
-      [404, HEADERS, ['404 Not Found'.to_json]]
+      [404, HEADERS, ['<html><body><h4>404 Not Found</h4></body></html>']]
     end
   end
 end
