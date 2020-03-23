@@ -1,10 +1,7 @@
 require_relative 'lib/joke'
-require_relative 'utils/renderer'
-require_relative 'utils/response_handler'
+require_relative 'lib/rackuel'
 
-class Application
-  include Utils::ResponseHandler
-
+class Application < Rackuel
   HEADERS = {
     'Content-Type' => 'text/html'
   }.freeze
@@ -18,12 +15,12 @@ class Application
   def route_path(env)
     case env['REQUEST_PATH']
     when '/'
-      response(200, HEADERS, Utils::Renderer.new('index.html.erb').render)
+      response(200, HEADERS, render('index.html.erb'))
     when '/joke'
       joke = Joke.fetch
-      response(200, HEADERS, Utils::Renderer.new('joke.html.erb', { joke: joke }).render)
+      response(200, HEADERS, render('joke.html.erb', { joke: joke }))
     else
-      response(404, HEADERS, Utils::Renderer.new('not_found.html.erb').render)
+      response(404, HEADERS, render('not_found.html.erb'))
     end
   end
 end
